@@ -1,0 +1,22 @@
+{
+  "type": "module",
+  "scripts": {
+    "build": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.9.3",
+    "@emotion/css": "^11.9.0",
+    "inline-css": "^3.0.0",
+    "jsdom": "^20.0.0",
+    "puppeteer": "^15.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  },
+  "nodemonConfig": {
+    "env": {
+      "NODE_ENV": "development"
+    }
+  }
+}
