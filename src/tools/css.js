@@ -59,6 +59,7 @@ export const consts = {
   s52: "13rem",
   s56: "14rem",
   s60: "15rem",
+  s62: "15.5rem",
   s64: "16rem",
   s72: "18rem",
   s80: "20rem",
