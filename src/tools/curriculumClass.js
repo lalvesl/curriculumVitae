@@ -14,9 +14,43 @@ export default class {
     this.document = this.window.document;
   }
   render() {
+    this.style.addG(
+      css({
+        ":root": {
+          fontSize: "4.5mm",
+          fontFamily: `Noto Sans`,
+          fontFeatureSettings:
+            '"kern" 0,"calt" 0,"liga" 0,"clig" 0,"dlig" 0,"hlig" 0',
+          fontWeight: 700,
+          letterSpacing: consts.s0_75,
+        },
+        html: {
+          boxSizing: "border-box",
+          backgroundColor: "black",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        },
+        body: {
+          margin: 0,
+          width: "210mm",
+          height: "297mm",
+          backgroundColor: "white",
+        },
+      })
+    );
     let styleElement = this.document.createElement("style");
     styleElement.innerHTML = this.style.buildStyles();
     this.document.head.appendChild(styleElement);
     return this.document.documentElement.innerHTML;
+  }
+  /**
+   *
+   * @param {HTMLElement} element
+   * @param  {...String} classCss
+   */
+  addStyle(element, ...classCss) {
+    element.classList.add(...classCss);
+    this.style.add(...classCss);
   }
 }
