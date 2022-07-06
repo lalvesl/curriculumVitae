@@ -5,15 +5,15 @@ import path from "path";
 import _image from "../components/image.js";
 
 export default class extends curriculumClass {
+  colors = {
+    primary: "rgb(51, 83, 132)",
+    secondary: "rgb(91, 167, 209)",
+  };
   render() {
     let document = this.document;
     let body = this.document.body;
     let style = this.style;
     const addStyle = this.addStyle.bind(this);
-    const colors = {
-      primary: "rgb(51, 83, 132)",
-      secondary: "rgb(91, 167, 209)",
-    };
     const cssUncolorizedSide = css({
       padding: consts.s4,
       justifyContent: "right",
@@ -24,10 +24,10 @@ export default class extends curriculumClass {
       justifyContent: "center",
       alignItems: "center",
       width: consts.s62,
-      backgroundColor: colors.primary,
+      backgroundColor: this.colors.primary,
     });
     const image = new _image(document).render;
-    const imageElement = image(path.resolve("src/otherFiles/profileImage.JPG"));
+    const imageElement = image(path.resolve("src/mediaFiles/profileImage.JPG"));
     this.addStyle(
       imageElement,
       css({
@@ -46,7 +46,7 @@ export default class extends curriculumClass {
     addStyle(
       name,
       css({
-        color: colors.primary,
+        color: this.colors.primary,
         textTransform: "uppercase",
       })
     );
@@ -58,7 +58,7 @@ export default class extends curriculumClass {
         width: consts.s20,
         marginRight: "auto",
         backgroundColor: "black",
-        backgroundColor: colors.primary,
+        backgroundColor: this.colors.primary,
       })
     );
     const workType = document.createElement("h3");
@@ -66,7 +66,7 @@ export default class extends curriculumClass {
     addStyle(
       workType,
       css({
-        color: colors.secondary,
+        color: this.colors.secondary,
         textTransform: "uppercase",
       })
     );

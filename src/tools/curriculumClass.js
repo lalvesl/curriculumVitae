@@ -13,6 +13,10 @@ export default class {
     this.window = new JSDOM(whitePage).window;
     this.document = this.window.document;
   }
+  colors = {
+    primary: "black",
+    secondary: "white",
+  };
   render() {
     this.style.addG(
       css({
