@@ -4,8 +4,8 @@ import path from "path";
 import component from "../tools/component.js";
 
 export default class extends component {
-  constructor(document) {
-    super(document);
+  constructor(that) {
+    super(that);
     this.builder(this);
   }
   render(pathImage) {

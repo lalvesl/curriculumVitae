@@ -3,6 +3,8 @@ import { consts } from "../tools/css.js";
 import curriculumClass from "../tools/curriculumClass.js";
 import path from "path";
 import _image from "../components/image.js";
+import _colorizedSide from "../components/colorizedSide.js";
+import _uncolorizedSide from "../components/uncolorizedSide.js";
 
 export default class extends curriculumClass {
   colors = {
@@ -13,21 +15,11 @@ export default class extends curriculumClass {
     let document = this.document;
     let body = this.document.body;
     let style = this.style;
+    const image = new _image(this).render;
+    const colorizedSide = new _colorizedSide(this).render;
+    const uncolorizedSide = new _uncolorizedSide(this).render;
     const addStyle = this.addStyle.bind(this);
-    const cssUncolorizedSide = css({
-      padding: consts.s4,
-      justifyContent: "right",
-      flex: 1,
-    });
-    const cssColorizedSide = css({
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      width: consts.s62,
-      backgroundColor: this.colors.primary,
-    });
-    const image = new _image(document).render;
-    const imageElement = image(path.resolve("src/mediaFiles/profileImage.JPG"));
+    const imageElement = image("src/mediaFiles/profileImage.JPG");
     this.addStyle(
       imageElement,
       css({
@@ -36,11 +28,7 @@ export default class extends curriculumClass {
         borderRadius: "100%",
       })
     );
-    const headerColorized = document.createElement("div");
-    headerColorized.append(imageElement);
-    this.addStyle(headerColorized, cssColorizedSide);
-    const headerUncolorized = document.createElement("div");
-    this.addStyle(headerUncolorized, cssUncolorizedSide);
+    const headerColorized = colorizedSide(imageElement);
     const name = document.createElement("h1");
     name.innerHTML = "Lucas Alves De Lima";
     addStyle(
@@ -70,7 +58,7 @@ export default class extends curriculumClass {
         textTransform: "uppercase",
       })
     );
-    headerUncolorized.append(name, ornament, workType);
+    const headerUncolorized = uncolorizedSide(name, ornament, workType);
     const header = document.createElement("div");
     addStyle(
       header,

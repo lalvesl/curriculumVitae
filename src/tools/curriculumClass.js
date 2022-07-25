@@ -4,7 +4,7 @@ import { promises as fs } from "fs";
 import { JSDOM } from "jsdom";
 
 const whitePage = await fs
-  .readFile("./src/whiteWindow.html")
+  .readFile("src/whiteWindow.html")
   .catch((err) => console.log("Not load whitePage " + err));
 
 export default class {

@@ -1,7 +1,9 @@
 export default class {
-  constructor(document) {
+  constructor(that) {
     /**@type {Document} */
-    this.document = document;
+    this.document = that.document;
+    this.colors = that.colors;
+    this.addStyle = that.addStyle.bind(that);
   }
   builder(thatComponent) {
     thatComponent.render = thatComponent.render.bind(this);
