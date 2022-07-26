@@ -3,6 +3,7 @@ import puppeteer from "puppeteer";
 import inlineCss from "inline-css";
 import devServer from "../dev/server.js";
 import path from "path";
+import jsx2js from "../dev/jsx2js.js";
 
 async function generatePdf(html, pathToFile) {
   return new Promise(async (resolve) => {
@@ -54,6 +55,7 @@ buildCurricula()
   .catch(console.log)
   .then(() => {
     if (process.env.NODE_ENV === "development") {
+      jsx2js();
       devServer(PATH_BUILDS);
     }
   });
