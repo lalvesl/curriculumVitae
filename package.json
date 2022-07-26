@@ -1,7 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "build": "node src/index.js",
+    "jsxBuild": "node dev/jsx2js.js",
+    "build": "npm run jsxBuild && node src/index.js",
     "dev": "nodemon src/index.js"
   },
   "dependencies": {
@@ -12,7 +13,8 @@
     "puppeteer": "^15.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.18"
+    "nodemon": "^2.0.18",
+    "prettier": "2.7.1"
   },
   "nodemonConfig": {
     "env": {
