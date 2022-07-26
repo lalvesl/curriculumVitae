@@ -94,3 +94,5 @@ export default function jsx2js() {
     newCode += "})()";
   });
 }
+
+//import process for npx prettier --write .
