@@ -19,7 +19,7 @@ let listFiles = async (pathDirOrFile, basePath = "./") => {
       ? await fs
           .readdir(target)
           .then((subPath) => subPath.map((el) => listFiles(el, target)))
-          .then(Promise.all)
+          .then(promise.all)
           .then((el) =>
             el
               .flat()
@@ -32,30 +32,39 @@ let listFiles = async (pathDirOrFile, basePath = "./") => {
 };
 
 (async () => {
+  function addLibDocument(txtJs, libPath) {
+    let _import = `import document from "${path.relative(
+      path.dirname(libPath),
+      pathLibDocument
+    )}";`;
+    return txtJs.includes(_import) ? txtJs : _import + txtJs;
+  }
   await exec(`rm -r ${args.build}`).catch(() => {});
-  await exec(`cp -r ${args.source} ${args.build}`);
-  (await listFiles(args.build))
-    .map((filePath) => {
-      // await  fs.mkdir
-      return filePath;
-    })
-    .map(async (jsFilePath) => {
-      return {
-        file: await fs.readFile(jsFilePath, "utf-8"),
-        path: jsFilePath,
-      };
-    })
-    .then(Promise.all)
-    .then((jsFiles) =>
-      jsFiles.forEach((jsFile) => {
-        console.log(jsFile.file);
+  let pathBuilds = path.join(args.build, args.source);
+  await exec(
+    `mkdir -p ${pathBuilds} && cp -r ${path.join(args.source)}/ ${path.dirname(
+      pathBuilds
+    )}`
+  );
+  let pathLibDocument = path.join(args.build, args.libDocument);
+  await fs.cp(args.libDocument, pathLibDocument);
+  await listFiles(pathBuilds)
+    .then((filePaths) =>
+      filePaths.map(async (jsFilePath) => {
+        return {
+          file: await fs.readFile(jsFilePath, "utf-8"),
+          pathBuild: jsFilePath,
+        };
       })
-    );
-})()
-  .then(console.log)
-  .catch(console.log);
-
-// const libJsdom = `import { JSDOM } from "jsdom";`;
-// txt = fs.readFileSync("./test.jsx", "utf-8");
-// const regexFindLib = new RegExp(libJsdom.replace(/\s/g, ".?"), "g");
-// if (!regexFindLib.test(txt)) txt = libJsdom + txt;
+    )
+    .then(promise.all)
+    .then((files) => {
+      return Promise.all(
+        files.map((file) => {
+          let newJs = addLibDocument(jsx2js(file.file), file.pathBuild);
+          return fs.writeFile(file.pathBuild, newJs);
+        })
+      );
+    });
+  console.log("successful builds");
+})();
