@@ -6,10 +6,12 @@ import jsx2js from "./jsx2js.js";
 
 let exec = promise.promisify(_exec);
 
-let args = { source: "", build: "", libDocument: "" };
+let args = { source: "", build: "", libDocument: "", addFolder: "" };
 const argv = process.argv.join(" ");
 Object.keys(args).forEach((key) => {
-  args[key] = (argv.match(new RegExp(`(?<=(${key})\\=)[^\\s]+`)) || [""])[0];
+  args[key] = path.join(
+    (argv.match(new RegExp(`(?<=(${key})\\=)[^\\s]+`)) || [""])[0]
+  );
 });
 
 let listFiles = async (pathDirOrFile, basePath = "./") => {
@@ -41,11 +43,9 @@ let listFiles = async (pathDirOrFile, basePath = "./") => {
   }
   await exec(`rm -r ${args.build}`).catch(() => {});
   let pathBuilds = path.join(args.build, args.source);
-  await exec(
-    `mkdir -p ${pathBuilds} && cp -r ${path.join(args.source)}/ ${path.dirname(
-      pathBuilds
-    )}`
-  );
+  await exec(`mkdir -p ${pathBuilds}`);
+  await exec(`cp -r ${args.source}/ ${path.dirname(pathBuilds)}`);
+  await exec(`cp -r  ${args.addFolder} ${args.build}/`);
   let pathLibDocument = path.join(args.build, args.libDocument);
   await fs.cp(args.libDocument, pathLibDocument);
   await listFiles(pathBuilds)
