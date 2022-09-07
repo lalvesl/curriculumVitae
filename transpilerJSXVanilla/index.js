@@ -9,9 +9,8 @@ let exec = promise.promisify(_exec);
 let args = { source: "", build: "", libDocument: "", addFolder: "" };
 const argv = process.argv.join(" ");
 Object.keys(args).forEach((key) => {
-  args[key] = path.join(
-    (argv.match(new RegExp(`(?<=(${key})\\=)[^\\s]+`)) || [""])[0]
-  );
+  let foundArg = (argv.match(new RegExp(`(?<=(${key})\\=)[^\\s]+`)) || [""])[0];
+  if (foundArg) args[key] = path.join(foundArg);
 });
 
 let listFiles = async (pathDirOrFile, basePath = "./") => {
@@ -35,7 +34,7 @@ let listFiles = async (pathDirOrFile, basePath = "./") => {
 
 (async () => {
   function addLibDocument(txtJs, libPath) {
-    let _import = `import document from "${path.relative(
+    let _import = `import {document} from "${path.relative(
       path.dirname(libPath),
       pathLibDocument
     )}";`;
@@ -45,7 +44,7 @@ let listFiles = async (pathDirOrFile, basePath = "./") => {
   let pathBuilds = path.join(args.build, args.source);
   await exec(`mkdir -p ${pathBuilds}`);
   await exec(`cp -r ${args.source}/ ${path.dirname(pathBuilds)}`);
-  await exec(`cp -r  ${args.addFolder} ${args.build}/`);
+  if (args.addFolder) await exec(`cp -r  ${args.addFolder} ${args.build}/`);
   let pathLibDocument = path.join(args.build, args.libDocument);
   await fs.cp(args.libDocument, pathLibDocument);
   await listFiles(pathBuilds)

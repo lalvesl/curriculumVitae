@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "jsxBuild": "node transpilerJSXVanilla/index.js source=\"src\" build=\"jsBuilded\" libDocument=\"utils/document.js\" addFolder=\"utils\"",
+    "jsxBuild": "node transpilerJSXVanilla/index.js source=\"src\" build=\"jsBuilded\" libDocument=\"utils/dom.js\" addFolder=\"utils\"",
     "jsxTest": "node transpilerJSXVanilla/index.test.js",
     "build": "npm run jsxBuild && node src/index.js",
     "dev": "nodemon src/index.js"

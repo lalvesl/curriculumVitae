@@ -5,7 +5,7 @@ let exec = promise.promisify(_exec);
 
 (async () => {
   await exec(
-    'node transpilerJSXVanilla/index.js source="transpilerJSXVanilla/example" build="jsBuilded" libDocument="utils/document.js"'
+    'node transpilerJSXVanilla/index.js source="transpilerJSXVanilla/example" build="jsBuilded" libDocument="utils/dom.js"  addFolder="utils"'
   );
   let source = fs.readFile(
     "transpilerJSXVanilla/example/exampleJSX.js",

@@ -1,4 +1,4 @@
-import document from "../../../utils/document.js";
+import {document} from "../../../utils/document.js";
 import logo from "./logo.svg";
 
 import "./App.css";
