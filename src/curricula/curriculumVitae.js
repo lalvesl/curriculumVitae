@@ -1,6 +1,6 @@
 import { css, flush } from "@emotion/css";
-import { consts } from "../utils/css.js";
-import curriculumClass from "../utils/curriculumClass.js";
+import { consts } from "../tools/css.js";
+import curriculumClass from "../tools/curriculumClass.js";
 import path from "path";
 import _image from "../components/image.js";
 import _colorizedSide from "../components/colorizedSide.js";
