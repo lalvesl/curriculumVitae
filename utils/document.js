@@ -1,130 +1,16 @@
 import { JSDOM } from "jsdom";
 
 /**
- * @type {Document}
+ * @type {Window}
  */
 
-const document = new JSDOM("").window.document;
+const window = new JSDOM("").window.document;
+const document = window.document;
 
-const ALL_TAGS_HTML = [
-  "a",
-  "abbr",
-  "acronymaddress",
-  "appletarea",
-  "article",
-  "aside",
-  "audio",
-  "b",
-  "base",
-  "basefontbdi",
-  "bdo",
-  "bigblockquote",
-  "body",
-  "br",
-  "button",
-  "canvas",
-  "caption",
-  "centercite",
-  "code",
-  "col",
-  "colgroup",
-  "data",
-  "datalist",
-  "dd",
-  "del",
-  "details",
-  "dfn",
-  "dialog",
-  "dirdiv",
-  "dl",
-  "dt",
-  "em",
-  "embed",
-  "fieldset",
-  "figcaption",
-  "figure",
-  "fontfooter",
-  "form",
-  "frameframeseth1",
-  "head",
-  "header",
-  "hr",
-  "html",
-  "i",
-  "iframe",
-  "img",
-  "input",
-  "ins",
-  "kbd",
-  "label",
-  "legend",
-  "li",
-  "link",
-  "main",
-  "map",
-  "mark",
-  "meta",
-  "meter",
-  "nav",
-  "noframesnoscript",
-  "object",
-  "ol",
-  "optgroup",
-  "option",
-  "output",
-  "p",
-  "param",
-  "picture",
-  "pre",
-  "progress",
-  "q",
-  "rp",
-  "rt",
-  "ruby",
-  "s",
-  "samp",
-  "script",
-  "section",
-  "select",
-  "small",
-  "source",
-  "span",
-  "strikestrong",
-  "style",
-  "sub",
-  "summary",
-  "sup",
-  "svg",
-  "table",
-  "tbody",
-  "td",
-  "template",
-  "textarea",
-  "tfoot",
-  "th",
-  "thead",
-  "time",
-  "title",
-  "tr",
-  "track",
-  "ttu",
-  "ul",
-  "var",
-  "video",
-  "wbr",
-];
-
-ALL_TAGS_HTML.map((el) => document.createElement(el))
-  .concat(document.documentElement)
-  .map((el) => {
-    Reflect.defineProperty(el.constructor.prototype, "toString", {
-      value: function () {
-        return this.innerHTML;
-      },
-    });
-    return el;
-  })
-  .slice(0, -1)
-  .map((el) => el.remove());
+Reflect.defineProperty(window.Element.prototype, "toString", {
+  value: function () {
+    return this.innerHTML;
+  },
+});
 
 export default document;
