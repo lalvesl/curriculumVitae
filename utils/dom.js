@@ -4,7 +4,7 @@ import { JSDOM } from "jsdom";
  * @type {Window}
  */
 
-const window = new JSDOM("").window.document;
+const window = new JSDOM("").window;
 const document = window.document;
 
 function changeToStringHTMLElement() {
