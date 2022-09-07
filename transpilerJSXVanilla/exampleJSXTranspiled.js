@@ -5,7 +5,7 @@ import "./App.css";
 
 function App() {
   return (() => {
-    let htmlElement = document.createElemen("div");
+    let htmlElement = document.createElement("div");
     htmlElement.innerHTML = `<div className="App">
       <header className="App-header">
         <img src=${logo} className="App-logo" alt="logo" />
@@ -30,7 +30,7 @@ function App() {
 
 function App2() {
   return (() => {
-    let htmlElement = document.createElemen("div");
+    let htmlElement = document.createElement("div");
     htmlElement.innerHTML = `<div className="App">
       <header className="App-header">
         <img

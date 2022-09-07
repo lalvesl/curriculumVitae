@@ -118,7 +118,7 @@ export default function jsx2js(txt) {
       }
       txtHtml =
         `(()=>{
-      let htmlElement = document.createElemen("${
+      let htmlElement = document.createElement("${
         txtHtml.match(/(?<=<)\w+/)[0]
       }");` +
         `htmlElement.innerHTML = \`${txtHtml}\`;` +
