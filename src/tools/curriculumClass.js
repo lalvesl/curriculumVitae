@@ -18,7 +18,9 @@ export default class {
     secondary: "white",
   };
   render() {
-    this.style.addG(
+    let styleElement = this.document.createElement("style");
+    styleElement.innerHTML = this.style.buildStyles(
+      this.document.documentElement,
       css({
         ":root": {
           fontSize: "4.5mm",
@@ -43,8 +45,6 @@ export default class {
         },
       })
     );
-    let styleElement = this.document.createElement("style");
-    styleElement.innerHTML = this.style.buildStyles();
     this.document.head.appendChild(styleElement);
     return this.document.documentElement.innerHTML;
   }

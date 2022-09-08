@@ -2,7 +2,7 @@ import { css, flush } from "@emotion/css";
 import { consts } from "../tools/css.js";
 import curriculumClass from "../tools/curriculumClass.js";
 import path from "path";
-import _image from "../components/image.js";
+import { image } from "../components/image.js";
 import _colorizedSide from "../components/colorizedSide.js";
 import _uncolorizedSide from "../components/uncolorizedSide.js";
 
@@ -12,64 +12,58 @@ export default class extends curriculumClass {
     secondary: "rgb(91, 167, 209)",
   };
   render() {
-    let document = this.document;
-    let body = this.document.body;
-    let style = this.style;
-    const image = new _image(this).render;
-    const colorizedSide = new _colorizedSide(this).render;
-    const uncolorizedSide = new _uncolorizedSide(this).render;
-    const addStyle = this.addStyle.bind(this);
+    let [colorizedSide, uncolorizedSide] = [
+      _colorizedSide,
+      _uncolorizedSide,
+    ].map((component) => component.bind(this));
     const imageElement = image("src/mediaFiles/profileImage.JPG");
-    this.addStyle(
-      imageElement,
+    imageElement.classList.add(
       css({
         height: consts.s32,
         width: consts.s32,
         borderRadius: "100%",
       })
     );
-    const headerColorized = colorizedSide(imageElement);
-    const name = document.createElement("h1");
-    name.innerHTML = "Lucas Alves De Lima";
-    addStyle(
-      name,
-      css({
-        color: this.colors.primary,
-        textTransform: "uppercase",
-      })
+    const app = (
+      <app>
+        <header
+          class={css({
+            display: "flex",
+            flexDirection: "row",
+          })}
+        >
+          {colorizedSide(imageElement) +
+            uncolorizedSide(
+              <h1
+                class={css({
+                  color: this.colors.primary,
+                  textTransform: "uppercase",
+                })}
+              >
+                Lucas Alves De Lima
+              </h1>,
+              <div
+                class={css({
+                  height: consts.s0_75,
+                  width: consts.s20,
+                  marginRight: "auto",
+                  backgroundColor: "black",
+                  backgroundColor: this.colors.primary,
+                })}
+              ></div>,
+              <h3
+                class={css({
+                  color: this.colors.secondary,
+                  textTransform: "uppercase",
+                })}
+              >
+                Desenvolvedor Fullstack
+              </h3>
+            )}
+        </header>
+      </app>
     );
-    const ornament = document.createElement("div");
-    addStyle(
-      ornament,
-      css({
-        height: consts.s0_75,
-        width: consts.s20,
-        marginRight: "auto",
-        backgroundColor: "black",
-        backgroundColor: this.colors.primary,
-      })
-    );
-    const workType = document.createElement("h3");
-    workType.innerHTML = "Desenvolvedor fullStack";
-    addStyle(
-      workType,
-      css({
-        color: this.colors.secondary,
-        textTransform: "uppercase",
-      })
-    );
-    const headerUncolorized = uncolorizedSide(name, ornament, workType);
-    const header = document.createElement("div");
-    addStyle(
-      header,
-      css({
-        display: "flex",
-        flexDirection: "row",
-      })
-    );
-    header.append(headerColorized, headerUncolorized);
-
-    body.append(header);
+    this.document.body.append(app);
     return super.render();
   }
 }

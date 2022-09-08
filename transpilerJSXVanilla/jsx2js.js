@@ -112,17 +112,20 @@ export default function jsx2js(txt) {
       jsInSideHtml = jsInSideHtml.filter((el) => el.start !== el.end - 2);
       if (jsInSideHtml.length) {
         let [jss, htmls] = sliceSubTxts(txtHtml, jsInSideHtml);
-        htmls = htmls.map((html) => html.replace(/`/g, "\\`"));
-        jss = jss.map((js) => `\$\{${jsx2js(js.slice(1, js.length - 1))}\}`);
+        htmls = htmls.map((html) =>
+          html.replace(/`/g, "\\`").replace(/\n/g, "")
+        );
+        jss = jss.map((js, i) => {
+          const quot = htmls[i][htmls[i].length - 1] === "=" ? '"' : "";
+          return quot + `\$\{${jsx2js(js.slice(1, js.length - 1))}\}` + quot;
+        });
         txtHtml = bindingTxt(jss, htmls);
       }
       txtHtml =
         `(()=>{
-      let htmlElement = document.createElement("${
-        txtHtml.match(/(?<=<)\w+/)[0]
-      }");` +
-        `htmlElement.innerHTML = \`${txtHtml}\`;` +
-        "return htmlElement})()";
+      let a = document.createElement("foo");` +
+        `a.innerHTML = \`${txtHtml}\`;` +
+        "return a.firstChild})()";
       return txtHtml;
     });
     let jsTranspiled = bindingTxt(txtHtmls, txtSimpleJs);

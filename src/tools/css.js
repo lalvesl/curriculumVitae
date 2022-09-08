@@ -1,5 +1,6 @@
 import { cache } from "@emotion/css";
-cache.sheet.key = cache.key = "a";
+const KEY_CSS = "s-";
+cache.sheet.key = cache.key = KEY_CSS[0];
 export class _style {
   constructor() {
     this.global = [];
@@ -12,21 +13,21 @@ export class _style {
   addG = (...args) => {
     this.global = this.global.concat(args);
   };
-  buildStyles() {
-    const key = cache.key + "-";
-    let getStyle = (className) => {
-      className = className.replace(key, "");
-      return cache.inserted[className] || "";
-    };
-    return this.global
-      .map((thisClass) =>
-        getStyle(thisClass).replace(RegExp(`${"." + thisClass}\\s*`, "g"), "")
+  buildStyles = (htmlElement, ...globalKeys) =>
+    globalKeys
+      .map((key) =>
+        cache.inserted[key.replace(KEY_CSS, "")].replace(
+          RegExp(`${"." + key}\\s*`, "g"),
+          ""
+        )
       )
-      .concat(this.classCss.map(getStyle))
+      .concat(
+        Object.keys(cache.inserted).map((key) =>
+          htmlElement.innerHTML.includes(key) ? cache.inserted[key] : ""
+        )
+      )
       .join("");
-  }
 }
-
 export const consts = {
   s0_25: "0.06rem",
   s0_5: "0.125rem",
