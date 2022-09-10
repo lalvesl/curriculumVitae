@@ -1,10 +1,7 @@
-import { css, flush } from "@emotion/css";
+import { css } from "@emotion/css";
 import { consts } from "../tools/css.js";
 import curriculumClass from "../tools/curriculumClass.js";
-import path from "path";
 import { image } from "../components/image.js";
-import _colorizedSide from "../components/colorizedSide.js";
-import _uncolorizedSide from "../components/uncolorizedSide.js";
 
 export default class extends curriculumClass {
   colors = {
@@ -12,10 +9,6 @@ export default class extends curriculumClass {
     secondary: "rgb(91, 167, 209)",
   };
   render() {
-    let [colorizedSide, uncolorizedSide] = [
-      _colorizedSide,
-      _uncolorizedSide,
-    ].map((component) => component.bind(this));
     const imageElement = image("src/mediaFiles/profileImage.JPG");
     imageElement.classList.add(
       css({
@@ -32,8 +25,8 @@ export default class extends curriculumClass {
             flexDirection: "row",
           })}
         >
-          {colorizedSide(imageElement) +
-            uncolorizedSide(
+          {this.colorizedSide(imageElement) +
+            this.uncolorizedSide(
               <h1
                 class={css({
                   color: this.colors.primary,
@@ -65,5 +58,33 @@ export default class extends curriculumClass {
     );
     this.document.body.append(app);
     return super.render();
+  }
+  colorizedSide(...subElements) {
+    return (
+      <div
+        class={css({
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: consts.s62,
+          backgroundColor: this.colors.primary,
+        })}
+      >
+        {subElements}
+      </div>
+    );
+  }
+  uncolorizedSide(...subElements) {
+    return (
+      <div
+        class={css({
+          padding: consts.s4,
+          justifyContent: "right",
+          flex: 1,
+        })}
+      >
+        {subElements}
+      </div>
+    );
   }
 }
