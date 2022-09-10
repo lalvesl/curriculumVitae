@@ -15,6 +15,15 @@ function changeToStringHTMLElement() {
   });
 }
 
-changeToStringHTMLElement();
+function changeArrayToString() {
+  Reflect.defineProperty(Array.prototype, "toString", {
+    value: function () {
+      return this.join("");
+    },
+  });
+}
 
-export { window, document, changeToStringHTMLElement };
+changeToStringHTMLElement();
+changeArrayToString();
+
+export { window, document, changeToStringHTMLElement, changeArrayToString };
