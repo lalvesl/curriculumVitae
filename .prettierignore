@@ -1,4 +1,4 @@
 transpilerJSXVanilla/exampleJSXTranspiled.js
 jsBuilded/
 curriculaBuilt/
-utils/icons.js
+src/tools/icons.js

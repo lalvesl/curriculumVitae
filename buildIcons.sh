@@ -1,7 +1,7 @@
 buildIcons(){
-    rm -rf utils/icons
-    mkdir utils/icons 
-    cd utils/icons 
+    rm -rf src/tools/icons
+    mkdir src/tools/icons 
+    cd src/tools/icons 
     outPath="../icons.js"
     rm $outPath
     git clone git@github.com:material-icons/material-icons.git
@@ -28,7 +28,7 @@ buildIcons(){
     rm -rf icons/
 }
 
-if [ ! -f "./utils/icons.js" ]; then
+if [ ! -f "src/tools/icons.js" ]; then
     buildIcons
 fi
 echo "icons builded"
