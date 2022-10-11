@@ -1,22 +1,21 @@
 {
   "type": "module",
   "scripts": {
-    "buildIcons": "sh ./buildIcons.sh",
     "jsxBuild": "node transpilerJSXVanilla/index.js source=\"src\" build=\"jsBuilded\" libDocument=\"utils/dom.js\" addFolder=\"utils\"",
     "jsxTest": "node transpilerJSXVanilla/index.test.js",
-    "build": "npm run buildIcons && npm run jsxBuild && cd jsBuilded && node src/index.js",
+    "forcingEmotionServer": "sd 'document' 'undefined' node_modules/@emotion/**/**/*.js",
+    "build": "npm run forcingEmotionServer && npm run jsxBuild  && cd jsBuilded && node src/index.js",
     "dev": "nodemon --watch './src' --exec 'npm run build'"
   },
   "dependencies": {
-    "@emotion/cache": "^11.9.3",
-    "@emotion/css": "^11.9.0",
-    "inline-css": "^3.0.0",
-    "jsdom": "^20.0.0",
+    "@emotion/cache": "^11.10.3",
+    "@emotion/css": "^11.10.0",
+    "inline-css": "^4.0.1",
+    "jsdom": "^20.0.1",
     "puppeteer": "^15.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.18",
-    "prettier": "2.7.1"
+    "nodemon": "^2.0.18"
   },
   "nodemonConfig": {
     "env": {
