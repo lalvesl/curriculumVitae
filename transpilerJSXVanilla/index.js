@@ -60,8 +60,9 @@ let listFiles = async (pathDirOrFile, basePath = "./") => {
     .then((files) => {
       return Promise.all(
         files.map((file) => {
-          let newJs = addLibDocument(jsx2js(file.file), file.pathBuild);
-          return fs.writeFile(file.pathBuild, newJs);
+          // let newJs = addLibDocument(jsx2js(file.file), file.pathBuild);
+          // return fs.writeFile(file.pathBuild, newJs);
+          return fs.writeFile(file.pathBuild, jsx2js(file.file));
         })
       );
     });
