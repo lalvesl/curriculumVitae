@@ -3,12 +3,17 @@ import { JSDOM } from "jsdom";
 /**
  * @type {Window}
  */
-
-const window = new JSDOM("").window;
-const document = window.document;
+global.window = new JSDOM("").window;
+global.document = window.document;
 
 function changeToStringHTMLElement() {
   Reflect.defineProperty(window.Element.prototype, "toString", {
+    value: function () {
+      return this.outerHTML;
+    },
+  });
+  let a = document.createElement("a");
+  Reflect.defineProperty(a.constructor.prototype, "toString", {
     value: function () {
       return this.outerHTML;
     },
@@ -26,4 +31,4 @@ function changeArrayToString() {
 changeToStringHTMLElement();
 changeArrayToString();
 
-export { window, document, changeToStringHTMLElement, changeArrayToString };
+export { changeToStringHTMLElement, changeArrayToString };
