@@ -1,4 +1,7 @@
-export default function jsx2js(txt) {
+export default function jsx2js(txt = "") {
+  txt = txt
+    .replace(/\/\*((?!\/\*).)+\*\//gs, "")
+    .replace(/^(\s|\t)*\/\/.*/gm, "");
   function searchPattern(txt, pattern, offset = 0, filter = []) {
     let index = 0;
     while (true) {
