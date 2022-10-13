@@ -1,33 +1,8 @@
-import { cache } from "@emotion/css";
+import { cache, css } from "@emotion/css";
+import { countChar } from "./utils.js";
 const KEY_CSS = "s-";
 cache.sheet.key = cache.key = KEY_CSS[0];
-export class _style {
-  constructor() {
-    this.global = [];
-    this.classCss = [];
-  }
-  add = (...args) => {
-    this.classCss = this.classCss.concat(args);
-    return args;
-  };
-  addG = (...args) => {
-    this.global = this.global.concat(args);
-  };
-  buildStyles = (htmlElement, ...globalKeys) =>
-    globalKeys
-      .map((key) =>
-        cache.inserted[key.replace(KEY_CSS, "")].replace(
-          RegExp(`${"." + key}\\s*`, "g"),
-          ""
-        )
-      )
-      .concat(
-        Object.keys(cache.inserted).map((key) =>
-          htmlElement.innerHTML.includes(key) ? cache.inserted[key] : ""
-        )
-      )
-      .join("");
-}
+
 export const consts = {
   s0_25: "0.06rem",
   s0_5: "0.125rem",
@@ -286,3 +261,63 @@ export const consts = {
   rose800: "#9f1239",
   rose900: "#881337",
 };
+
+/**
+ * @param {HTMLElement} element
+ * @param {...string} classList
+ * @return {htmlElement}
+ */
+
+export function addStyle(element, ...classList) {
+  element.classList.add(...classList);
+  return element;
+}
+
+export const iconInit = css({
+  ":root": {
+    "@font-face": {
+      fontFamily: "icon",
+      fontStyle: "normal",
+      fontWeight: 400,
+      src: "url(https://fonts.gstatic.com/s/materialicons/v139/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2')",
+    },
+  },
+});
+
+export const cssGlue = (...cssClass) =>
+  [cssClass]
+    .flat()
+    .filter((c) => c)
+    .join(" ");
+
+export class _style {
+  constructor() {
+    this.global = [];
+    this.classCss = [];
+    this.countedVars = 0;
+  }
+  add = (...args) => {
+    this.classCss.push(...args.flat().filter((arg) => arg));
+  };
+  addG = (...args) => {
+    this.global.push(...args.flat().filter((arg) => arg));
+  };
+  countVar() {
+    let varName = "--" + countChar(this.countedVars++);
+    return [`var(${varName})`, varName + ":"];
+  }
+  getStyle = (key) => cache.inserted[key.replace(KEY_CSS, "")] || "";
+  buildStyles = (htmlElement, ...globalKeys) =>
+    globalKeys
+      .concat(this.global)
+      .map((key) =>
+        this.getStyle(key).replace(RegExp(`${"." + key}\\s*`, "g"), "")
+      )
+      .concat(this.classCss.map(this.getStyle))
+      .concat(
+        Object.keys(cache.inserted).map((key) =>
+          htmlElement.outerHTML.includes(key) ? this.getStyle(key) : ""
+        )
+      )
+      .join("");
+}
