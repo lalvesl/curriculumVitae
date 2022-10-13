@@ -3,6 +3,7 @@ import path from "path";
 import puppeteer from "puppeteer";
 import inlineCss from "inline-css";
 import devServer from "../utils/server.js";
+import {} from "../utils/dom.js";
 
 async function generatePdf(html, pathToFile) {
   return new Promise(async (resolve) => {
