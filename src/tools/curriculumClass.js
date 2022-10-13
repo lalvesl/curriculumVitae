@@ -1,7 +1,23 @@
-import { css } from "@emotion/css";
-import { consts, _style } from "./css.js";
-import { promises as fs } from "fs";
+import { cache, css } from "@emotion/css";
 import { JSDOM } from "jsdom";
+import { promises as fs } from "fs";
+import { consts, _style, iconInit } from "./css.js";
+import bin64 from "../../utils/bin64.js";
+// const data = bin64.to(
+//   new Uint8Array(await fs.readFile("./src/mediaFiles/icons.woff2"))
+// );
+
+// function addFontFace() {
+//   var f = new FontFace(
+//     "icon",
+//     bin64.from(new TextEncoder().encode("#dataFont#"))
+//   );
+// }
+
+// const addFontFaceScript = funcBuilder(<scrip>#bin64##func#()</scrip>, {
+//   bin64: bin64.toString(),
+//   func: addFontFace,
+// });
 
 const whitePage = await fs
   .readFile("src/whiteWindow.html")
@@ -23,7 +39,7 @@ export default class {
       this.document.documentElement,
       css({
         ":root": {
-          fontSize: "4.5mm",
+          fontSize: "4,5mm",
           fontFamily: `Noto Sans`,
           fontFeatureSettings:
             '"kern" 0,"calt" 0,"liga" 0,"clig" 0,"dlig" 0,"hlig" 0',
@@ -43,10 +59,11 @@ export default class {
           height: "297mm",
           backgroundColor: "white",
         },
-      })
+      }),
+      iconInit
     );
     this.document.head.appendChild(styleElement);
-    return this.document.documentElement.innerHTML;
+    return this.document.documentElement.outerHTML;
   }
   /**
    *
