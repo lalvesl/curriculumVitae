@@ -1,5 +1,7 @@
 # Creating my curriculumVitae
 
+This is repository for building my curriculum vitae, using the framework [jsVanilla](http://vanilla-js.com/) and with as few libraries as i can, but with [JSX](https://github.com/alves45/curriculumVitae/tree/master/transpilerJSXVanilla), [componentization](https://github.com/alves45/curriculumVitae/tree/master/src/components), static rendering a single [html](https://github.com/alves45/curriculumVitae/tree/master/src/components) and generating a [pdf files](https://github.com/alves45/curriculumVitae/tree/master/src/components).
+
 ## Building
 
 ```
