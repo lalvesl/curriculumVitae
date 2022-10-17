@@ -1,12 +1,28 @@
-import { findGroups } from "../utils/scriptParser.js";
+import { findGroups, searchPattern } from "../utils/scriptParser.js";
 
 export default function jsx2js(txt = "") {
   txt = txt
     .replace(/\/\*((?!\/\*).)+\*\//gs, "")
     .replace(/^(\s|\t)*\/\/.*/gm, "");
-  const metaTexts = [/"/, /'/, /`/].reduce((old, current) => {
-    return old.concat(findGroups(txt, current, current, old));
-  }, []);
+  const filters = [/"/, /'/, /`/];
+  let offset = 0;
+  let metaTexts = [];
+  while (true) {
+    let pattern = filters
+      .map((pattern) => [
+        pattern,
+        searchPattern(txt, pattern, offset, metaTexts),
+      ])
+      .reduce((plus, less) => (plus[1] > less[1] ? plus : less));
+    if (-1 === pattern[1]) break;
+    metaTexts.push(findGroups(txt, pattern[0], pattern[0], metaTexts));
+    offset = metaTexts
+      .flat()
+      .map((metaText) => metaText.end)
+      .sort()
+      .pop();
+    break;
+  }
   let allHtmls = findGroups(txt, /\<\w+/, /\/\w*\>/, metaTexts);
   if (allHtmls.length) {
     function sliceSubTxts(txt, findGroupsObj) {
