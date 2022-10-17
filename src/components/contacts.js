@@ -1,8 +1,7 @@
 import { css } from "@emotion/css";
 import { consts } from "../tools/css.js";
 import { funcBuilder } from "../tools/js2str.js";
-import componentBinder from "../tools/component.js";
-import __icon from "./icon.js";
+import icon from "./icon.js";
 
 const anchorStyle = css({
   color: "inherit",
@@ -24,30 +23,33 @@ const textStyle = css({
   marginTop: "Auto",
   marginBottom: "Auto",
 });
-export default function (that, props) {
-  componentBinder(that, { styles: [anchorStyle, divStyle, textStyle] });
-  const _icon = __icon(that);
-  let component = (iconName, text = "", href = "") => {
-    const icon = _icon;
-    const el = (
-      <div class={divStyle}>
-        {icon(iconName)}
-        <span class={textStyle}>{text}</span>
-      </div>
-    );
-    return href ? (
-      <a class={anchorStyle} href={href} target="_blank">
-        {el}
-      </a>
-    ) : (
-      el
-    );
-  };
-  component = funcBuilder(component, {
-    _icon,
+
+let contact = (iconName, text = "", href = "") => {
+  const el = (
+    <div class={divStyle}>
+      {icon(iconName)}
+      <span class={textStyle}>{text}</span>
+    </div>
+  );
+  return href ? (
+    <a class={anchorStyle} href={href} target="_blank">
+      {el}
+    </a>
+  ) : (
+    el
+  );
+};
+contact = funcBuilder(
+  contact,
+  {
+    icon,
     anchorStyle,
     divStyle,
     textStyle,
-  });
-  return component;
-}
+  },
+  {
+    props: { styles: [anchorStyle, divStyle, textStyle] },
+    subComponents: [icon],
+  }
+);
+export default contact;
