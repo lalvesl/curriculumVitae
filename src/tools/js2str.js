@@ -13,7 +13,7 @@ export function func2Str(func) {
  * @return {func}
  */
 
-export function funcBuilder(func, replacer) {
+export function funcBuilder(func, replacer, props) {
   let str = js2str(func, replacer);
   let exceptionGroups = [/\'/, /\"/, /\`/]
     .map((regex) => findGroups(str, regex, regex))
@@ -25,7 +25,7 @@ export function funcBuilder(func, replacer) {
     .slice(args.end)
     .replace(/(^(\s|\t)*(=>)?(\s|\t)*\{?(?<!\})\}?)|((?<=.*)\}$)/gs, "");
   args = str.slice(args.start + 1, args.end - 1);
-  return Function(args, body);
+  return Object.assign(Function(args, body), props);
 }
 
 export function js2str(any, replacer = {}) {
@@ -45,7 +45,8 @@ export function js2str(any, replacer = {}) {
           "}";
       break;
     case "string":
-      scriptString = '"' + any.replace(/\"/g, '\\"') + '"';
+      scriptString =
+        '"' + any.replace(/\\/g, "\\\\").replace(/\"/g, '\\"') + '"';
       break;
     default:
       scriptString = any?.toString() || "";

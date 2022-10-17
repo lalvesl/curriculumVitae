@@ -59,7 +59,9 @@ export class scriptExposer {
   }
   build() {
     return (
-      <scrip>{this.funcs.scripts.concat(this.runners.scripts).join(";")}</scrip>
+      <script>
+        {this.funcs.scripts.concat(this.runners.scripts).join(";")}
+      </script>
     );
   }
 }
