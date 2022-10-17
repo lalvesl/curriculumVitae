@@ -3,7 +3,7 @@ import path from "path";
 
 /**
  *
- * @param {*} pathImage
+ * @param {String} pathImage
  * @returns {HTMLImageElement}
  */
 

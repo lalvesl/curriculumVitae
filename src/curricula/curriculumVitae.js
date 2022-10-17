@@ -2,8 +2,8 @@ import { css } from "@emotion/css";
 import { consts } from "../tools/css.js";
 import curriculumClass from "../tools/curriculumClass.js";
 import { image } from "../components/image.js";
-import _icon from "../components/icon.js";
-import _contacts from "../components/contacts.js";
+import icon from "../components/icon.js";
+import contacts from "../components/contacts.js";
 
 export default class extends curriculumClass {
   colors = {
@@ -11,9 +11,8 @@ export default class extends curriculumClass {
     secondary: "rgb(91, 167, 209)",
   };
   render() {
-    const icon = _icon(this);
-    const contacts = _contacts(this);
-    const imageElement = image("src/mediaFiles/profileImage.JPG");
+    this.addComponent(contacts);
+    const imageElement = image("src/assets/profileImage.JPG");
     imageElement.classList.add(
       css({
         height: consts.s32,
