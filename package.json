@@ -10,7 +10,6 @@
   "dependencies": {
     "@emotion/cache": "^11.10.3",
     "@emotion/css": "^11.10.0",
-    "inline-css": "^4.0.1",
     "jsdom": "^20.0.1",
     "puppeteer": "^15.3.0"
   },

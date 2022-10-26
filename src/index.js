@@ -12,8 +12,7 @@ async function generatePdf(html, pathToFile) {
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
-    const htmlWithCssInline = await inlineCss(html, { url: "/" });
-    await page.setContent(htmlWithCssInline, {
+    await page.setContent(html, {
       waitUntil: "networkidle0", //await completely load html
     });
     await page.pdf({
