@@ -10,11 +10,11 @@
   "dependencies": {
     "@emotion/cache": "^11.10.3",
     "@emotion/css": "^11.10.0",
-    "jsdom": "^20.0.1",
-    "puppeteer": "^15.3.0"
+    "jsdom": "^24.0.0",
+    "puppeteer": "^21.7.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.18"
+    "nodemon": "^3.0.3"
   },
   "nodemonConfig": {
     "env": {
